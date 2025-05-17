@@ -5,9 +5,12 @@ public class Gramatica implements GramaticaConstants {
     public static void main(String[] args) throws ParseException {
         Gramatica parser = new Gramatica(System.in);
         parser.Inicio();  // Llamada al método 'inicio()' generado
+
+        TokenAsignaciones.SetTables();
     }
 
   final public void Inicio() throws ParseException {
+      System.out.println("Inicio");
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -15,6 +18,7 @@ public class Gramatica implements GramaticaConstants {
       case CARACTER:
       case CLASE:
       case HACER:
+      case DOBLE:
       case FLOTANTE:
       case PARA:
       case SI:
@@ -37,6 +41,13 @@ public class Gramatica implements GramaticaConstants {
         break label_1;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CARACTER:
+      case DOBLE:
+      case ENTERO:
+      case CADENA:{
+        declaracion();
+        break;
+        }
       case CLASE:
       case PRIVADO:
       case PROTEGIDO:
@@ -46,14 +57,11 @@ public class Gramatica implements GramaticaConstants {
         break;
         }
       case BOOLEANO:
-      case CARACTER:
       case HACER:
       case FLOTANTE:
       case PARA:
       case SI:
-      case ENTERO:
       case IMPRIMIR:
-      case CADENA:
       case MIENTRAS:
       case SWITCH:
       case LLAVE_IZQ:
@@ -71,6 +79,7 @@ public class Gramatica implements GramaticaConstants {
   }
 
   final public void Clase() throws ParseException {
+      System.out.println("Clase");
     try {
       label_2:
       while (true) {
@@ -114,13 +123,14 @@ public class Gramatica implements GramaticaConstants {
       }
       jj_consume_token(LLAVE_DER);
     } catch (ParseException e) {
-recuperarError(PUNTO_COMA);
+recuperarError(LLAVE_DER);
     } catch (TokenMgrError e) {
 recuperarErrorLexico();
     }
   }
 
   void recuperarError(int kind) throws ParseException {ParseException e = generateParseException();
+
          System.err.println(e.toString());
          ReporteHTML.agregarError(e.toString());
          Token t;
@@ -134,6 +144,7 @@ recuperarErrorLexico();
   }
 
   final public void Modificador() throws ParseException {
+      System.out.println("Modificador");
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case PUBLICO:{
@@ -165,6 +176,7 @@ recuperarErrorLexico();
   }
 
   final public void Metodo() throws ParseException {
+      System.err.println("Metodo");
     try {
       label_4:
       while (true) {
@@ -194,6 +206,7 @@ recuperarErrorLexico();
         case BOOLEANO:
         case CARACTER:
         case HACER:
+        case DOBLE:
         case FLOTANTE:
         case PARA:
         case SI:
@@ -226,6 +239,7 @@ recuperarErrorLexico();
   }
 
   final public void Parametros() throws ParseException {
+      System.err.println("Parametros");
     try {
       tipo_de_dato();
       jj_consume_token(IDENTIFICADOR);
@@ -272,11 +286,11 @@ recuperarErrorLexico();
   }
 
   final public void sentencia() throws ParseException {
+      System.err.println("sentencia");
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case BOOLEANO:
       case CARACTER:
-      case FLOTANTE:
+      case DOBLE:
       case ENTERO:
       case CADENA:{
         declaracion();
@@ -302,6 +316,8 @@ recuperarErrorLexico();
         imprimir();
         break;
         }
+      case BOOLEANO:
+      case FLOTANTE:
       case PRIVADO:
       case PROTEGIDO:
       case PUBLICO:
@@ -334,6 +350,7 @@ recuperarErrorLexico();
   }
 
   final public void Bloque() throws ParseException {
+      System.err.println("Bloque");
     try {
       jj_consume_token(LLAVE_IZQ);
       label_7:
@@ -342,6 +359,7 @@ recuperarErrorLexico();
         case BOOLEANO:
         case CARACTER:
         case HACER:
+        case DOBLE:
         case FLOTANTE:
         case PARA:
         case SI:
@@ -374,6 +392,7 @@ recuperarErrorLexico();
   }
 
   final public void asignacion() throws ParseException {
+      System.err.println("asignacion");
     try {
       jj_consume_token(IDENTIFICADOR);
       jj_consume_token(ASIGNACION);
@@ -387,6 +406,7 @@ recuperarErrorLexico();
   }
 
   final public void imprimir() throws ParseException {
+      System.err.println("imprimir");
     try {
       jj_consume_token(IMPRIMIR);
       jj_consume_token(PARENT_IZQ);
@@ -401,6 +421,7 @@ recuperarErrorLexico();
   }
 
   final public void si() throws ParseException {
+      System.err.println("si");
     try {
       jj_consume_token(SI);
       jj_consume_token(PARENT_IZQ);
@@ -415,6 +436,7 @@ recuperarErrorLexico();
   }
 
   final public void cuerpo_si() throws ParseException {
+      System.err.println("cuerpo_si");
     try {
       jj_consume_token(LLAVE_IZQ);
       label_8:
@@ -423,6 +445,7 @@ recuperarErrorLexico();
         case BOOLEANO:
         case CARACTER:
         case HACER:
+        case DOBLE:
         case FLOTANTE:
         case PARA:
         case SI:
@@ -457,6 +480,7 @@ recuperarErrorLexico();
           case BOOLEANO:
           case CARACTER:
           case HACER:
+          case DOBLE:
           case FLOTANTE:
           case PARA:
           case SI:
@@ -495,6 +519,7 @@ recuperarErrorLexico();
   }
 
   final public void mientras() throws ParseException {
+      System.err.println("mientras");
     try {
       jj_consume_token(MIENTRAS);
       jj_consume_token(PARENT_IZQ);
@@ -509,6 +534,7 @@ recuperarErrorLexico();
   }
 
   final public void cuerpo_mientras() throws ParseException {
+      System.err.println("cuerpo_mientras");
     try {
       jj_consume_token(LLAVE_IZQ);
       label_10:
@@ -517,6 +543,7 @@ recuperarErrorLexico();
         case BOOLEANO:
         case CARACTER:
         case HACER:
+        case DOBLE:
         case FLOTANTE:
         case PARA:
         case SI:
@@ -549,6 +576,7 @@ recuperarErrorLexico();
   }
 
   final public void para() throws ParseException {
+      System.err.println("para");
     try {
       jj_consume_token(PARA);
       jj_consume_token(PARENT_IZQ);
@@ -567,6 +595,7 @@ recuperarErrorLexico();
   }
 
   final public void cuerpo_para() throws ParseException {
+      System.err.println("cuerpo_para");
     try {
       jj_consume_token(LLAVE_IZQ);
       label_11:
@@ -575,6 +604,7 @@ recuperarErrorLexico();
         case BOOLEANO:
         case CARACTER:
         case HACER:
+        case DOBLE:
         case FLOTANTE:
         case PARA:
         case SI:
@@ -607,6 +637,7 @@ recuperarErrorLexico();
   }
 
   final public void hacer() throws ParseException {
+      System.err.println("hacer");
     try {
       jj_consume_token(HACER);
       cuerpo_hacer();
@@ -623,6 +654,7 @@ recuperarErrorLexico();
   }
 
   final public void cuerpo_hacer() throws ParseException {
+      System.err.println("cuerpo_hacer");
     try {
       jj_consume_token(LLAVE_IZQ);
       label_12:
@@ -631,6 +663,7 @@ recuperarErrorLexico();
         case BOOLEANO:
         case CARACTER:
         case HACER:
+        case DOBLE:
         case FLOTANTE:
         case PARA:
         case SI:
@@ -663,6 +696,7 @@ recuperarErrorLexico();
   }
 
   final public void seleccion() throws ParseException {
+      System.err.println("seleccion");
     try {
       jj_consume_token(SWITCH);
       jj_consume_token(PARENT_IZQ);
@@ -689,6 +723,7 @@ recuperarErrorLexico();
           case BOOLEANO:
           case CARACTER:
           case HACER:
+          case DOBLE:
           case FLOTANTE:
           case PARA:
           case SI:
@@ -723,6 +758,7 @@ recuperarErrorLexico();
           case BOOLEANO:
           case CARACTER:
           case HACER:
+          case DOBLE:
           case FLOTANTE:
           case PARA:
           case SI:
@@ -761,6 +797,7 @@ recuperarErrorLexico();
   }
 
   final public void SITUACION() throws ParseException {
+      System.err.println("SITUACION");
     jj_consume_token(CASO);
     expresion();
     jj_consume_token(DOS_PUNTOS);
@@ -770,6 +807,7 @@ recuperarErrorLexico();
       case BOOLEANO:
       case CARACTER:
       case HACER:
+      case DOBLE:
       case FLOTANTE:
       case PARA:
       case SI:
@@ -795,11 +833,47 @@ recuperarErrorLexico();
     }
   }
 
-  final public void declaracion() throws ParseException {
+  final public void declaracion() throws ParseException {Token id;
+      System.err.println("Declaracion");
     try {
-      tipo_de_dato();
-      jj_consume_token(IDENTIFICADOR);
-      jj_consume_token(PUNTO_COMA);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ENTERO:{
+        jj_consume_token(ENTERO);
+        id = jj_consume_token(IDENTIFICADOR);
+        jj_consume_token(PUNTO_COMA);
+TokenAsignaciones.InsertarSimbolo(id, 39);
+                System.out.println("inserto entero en la tabla de simbolos");
+        break;
+        }
+      case DOBLE:{
+        jj_consume_token(DOBLE);
+        id = jj_consume_token(IDENTIFICADOR);
+        jj_consume_token(PUNTO_COMA);
+TokenAsignaciones.InsertarSimbolo(id, 26);
+                System.out.println("inserto doble en la tabla de simbolos");
+        break;
+        }
+      case CARACTER:{
+        jj_consume_token(CARACTER);
+        id = jj_consume_token(IDENTIFICADOR);
+        jj_consume_token(PUNTO_COMA);
+TokenAsignaciones.InsertarSimbolo(id, 20);
+                System.out.println("inserto caracter en la tabla de simbolos");
+        break;
+        }
+      case CADENA:{
+        jj_consume_token(CADENA);
+        id = jj_consume_token(IDENTIFICADOR);
+        jj_consume_token(PUNTO_COMA);
+TokenAsignaciones.InsertarSimbolo(id, 57);
+                System.out.println("inserto cadena en la tabla de simbolos");
+        break;
+        }
+      default:
+        jj_la1[23] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     } catch (ParseException e) {
 recuperarError(PUNTO_COMA);
     } catch (TokenMgrError e) {
@@ -808,6 +882,7 @@ recuperarErrorLexico();
   }
 
   final public void tipo_de_dato() throws ParseException {
+      System.err.println("tipo_de_dato");
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case ENTERO:{
@@ -831,7 +906,7 @@ recuperarErrorLexico();
         break;
         }
       default:
-        jj_la1[23] = jj_gen;
+        jj_la1[24] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -843,6 +918,7 @@ recuperarErrorLexico();
   }
 
   final public void expresion() throws ParseException {
+      System.err.println("expresion");
     try {
       operando();
       label_17:
@@ -866,7 +942,7 @@ recuperarErrorLexico();
           break;
           }
         default:
-          jj_la1[24] = jj_gen;
+          jj_la1[25] = jj_gen;
           break label_17;
         }
         operador();
@@ -880,6 +956,7 @@ recuperarErrorLexico();
   }
 
   final public void operando() throws ParseException {
+      System.err.println("operando");
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case IDENTIFICADOR:{
@@ -909,7 +986,7 @@ recuperarErrorLexico();
         break;
         }
       default:
-        jj_la1[25] = jj_gen;
+        jj_la1[26] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -921,6 +998,7 @@ recuperarErrorLexico();
   }
 
   final public void operador() throws ParseException {
+      System.err.println("operador");
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case SUMA:{
@@ -980,7 +1058,7 @@ recuperarErrorLexico();
         break;
         }
       default:
-        jj_la1[26] = jj_gen;
+        jj_la1[27] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1000,7 +1078,7 @@ recuperarErrorLexico();
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[27];
+  final private int[] jj_la1 = new int[28];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -1012,16 +1090,16 @@ recuperarErrorLexico();
       jj_la1_init_3();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x2308000,0x2308000,0x0,0x108000,0x0,0x0,0x2108000,0x0,0x0,0x0,0x2108000,0x2108000,0x2108000,0x2108000,0x8000000,0x2108000,0x2108000,0x2108000,0x40000,0x2108000,0x2108000,0x0,0x2108000,0x108000,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x6308000,0x6308000,0x0,0x108000,0x0,0x0,0x6108000,0x0,0x0,0x0,0x6108000,0x6108000,0x6108000,0x6108000,0x8000000,0x6108000,0x6108000,0x6108000,0x40000,0x6108000,0x6108000,0x0,0x6108000,0x4100000,0x108000,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x147808b,0x147808b,0x438000,0x1438081,0x438000,0x438000,0x147808b,0x0,0x0,0x0,0x147808b,0x147808b,0x147808b,0x147808b,0x0,0x147808b,0x147808b,0x147808b,0x0,0x147808b,0x147808b,0x0,0x147808b,0x1000081,0x0,0x0,0x0,};
+      jj_la1_1 = new int[] {0x147808b,0x147808b,0x438000,0x1438081,0x438000,0x438000,0x147808b,0x0,0x0,0x0,0x147808b,0x147808b,0x147808b,0x147808b,0x0,0x147808b,0x147808b,0x147808b,0x0,0x147808b,0x147808b,0x0,0x147808b,0x1000080,0x1000081,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0x200060,0x200060,0x0,0x0,0x0,0x0,0x200060,0x2000000,0x20000000,0x2000000,0x200060,0x200060,0x200060,0x200060,0x0,0x200060,0x200060,0x200060,0x0,0x200060,0x200060,0x80,0x200060,0x0,0x80000000,0x8c0000,0x80000000,};
+      jj_la1_2 = new int[] {0x200060,0x200060,0x0,0x0,0x0,0x0,0x200060,0x2000000,0x20000000,0x2000000,0x200060,0x200060,0x200060,0x200060,0x0,0x200060,0x200060,0x200060,0x0,0x200060,0x200060,0x80,0x200060,0x0,0x0,0x80000000,0x8c0000,0x80000000,};
    }
    private static void jj_la1_init_3() {
-      jj_la1_3 = new int[] {0x8000000,0x8000000,0x0,0x0,0x0,0x0,0x8000000,0x0,0x0,0x0,0x8000000,0x8000000,0x8000000,0x8000000,0x0,0x8000000,0x8000000,0x8000000,0x0,0x8000000,0x8000000,0x0,0x8000000,0x0,0x11fe00f,0x38000000,0x11fe00f,};
+      jj_la1_3 = new int[] {0x8000000,0x8000000,0x0,0x0,0x0,0x0,0x8000000,0x0,0x0,0x0,0x8000000,0x8000000,0x8000000,0x8000000,0x0,0x8000000,0x8000000,0x8000000,0x0,0x8000000,0x8000000,0x0,0x8000000,0x0,0x0,0x11fe00f,0x38000000,0x11fe00f,};
    }
 
   /** Constructor with InputStream. */
@@ -1035,7 +1113,7 @@ recuperarErrorLexico();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 27; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 28; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -1049,7 +1127,7 @@ recuperarErrorLexico();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 27; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 28; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -1059,7 +1137,7 @@ recuperarErrorLexico();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 27; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 28; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -1069,7 +1147,7 @@ recuperarErrorLexico();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 27; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 28; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -1078,7 +1156,7 @@ recuperarErrorLexico();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 27; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 28; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -1087,7 +1165,7 @@ recuperarErrorLexico();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 27; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 28; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -1143,7 +1221,7 @@ recuperarErrorLexico();
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 27; i++) {
+    for (int i = 0; i < 28; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

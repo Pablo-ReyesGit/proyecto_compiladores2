@@ -12,6 +12,8 @@ public class Gramatica {
     public static void main(String[] args) throws ParseException {
         Gramatica parser = new Gramatica(System.in);
         parser.Inicio();  // Llamada al método 'inicio()' generado
+
+        TokenAsignaciones.SetTables();
     }
 }
 
@@ -20,6 +22,7 @@ PARSER_END(Gramatica)
 void Inicio()  :
 {}
 {
+
     (Clase() | sentencia())* <EOF>
 }
 
@@ -29,7 +32,7 @@ void Clase() :
     try {
     (Modificador())* <CLASE> <IDENTIFICADOR> <LLAVE_IZQ> (Metodo())* <LLAVE_DER>
     } catch (ParseException e) {
-            recuperarError(PUNTO_COMA);
+            recuperarError(LLAVE_DER);
     } catch (TokenMgrError e) {
                recuperarErrorLexico();
           }
@@ -275,15 +278,37 @@ void SITUACION() :
 }
 
 void declaracion():
-{}
 {
-    try{
-    tipo_de_dato() <IDENTIFICADOR> <PUNTO_COMA>
+    Token id;
+}
+{
+    try {
+        (
+            <ENTERO> id = <IDENTIFICADOR> <PUNTO_COMA> {
+                TokenAsignaciones.InsertarSimbolo(id, 39);
+                System.out.println("inserto entero en la tabla de simbolos");
+            }
+        |
+            <DOBLE> id = <IDENTIFICADOR> <PUNTO_COMA> {
+                TokenAsignaciones.InsertarSimbolo(id, 26);
+                System.out.println("inserto doble en la tabla de simbolos");
+            }
+        |
+            <CARACTER> id = <IDENTIFICADOR> <PUNTO_COMA> {
+                TokenAsignaciones.InsertarSimbolo(id, 20);
+                System.out.println("inserto caracter en la tabla de simbolos");
+            }
+        |
+            <CADENA> id = <IDENTIFICADOR> <PUNTO_COMA> {
+                TokenAsignaciones.InsertarSimbolo(id, 57);
+                System.out.println("inserto cadena en la tabla de simbolos");
+            }
+        )
     } catch (ParseException e) {
-            recuperarError(PUNTO_COMA);
-    }catch (TokenMgrError e) {
-              recuperarErrorLexico();
-         }
+        recuperarError(PUNTO_COMA);
+    } catch (TokenMgrError e) {
+        recuperarErrorLexico();
+    }
 }
 
 void tipo_de_dato() :

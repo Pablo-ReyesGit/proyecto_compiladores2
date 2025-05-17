@@ -84,6 +84,7 @@ public class Main {
             e.printStackTrace();
         }
 
+        TokenAsignaciones.imprimirTablaSimbolos();
 
         // 5. Finalmente generar el HTML
         ReporteHTML.generarReporte();
